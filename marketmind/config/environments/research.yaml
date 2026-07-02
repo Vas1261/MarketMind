@@ -1,0 +1,64 @@
+# config/environments/research.yaml
+#
+# Research environment configuration.
+# Used for full experiment runs, backtesting, and validation.
+# Stricter thresholds than local. Higher bootstrap iterations for reliability.
+
+environment: research
+
+logging:
+  level: INFO
+  format: console
+  log_file: "./logs/research.log"
+
+database:
+  url: "sqlite:///./data/marketmind_research.db"
+  echo_sql: false
+
+data:
+  providers:
+    primary: yahoo
+    fallback: mock
+  validation:
+    quality_gate_threshold: 0.75   # Production threshold per architecture doc
+    outlier_sigma: 4.0
+    max_missing_ratio: 0.02
+    freshness_max_lag_days: 5
+  storage:
+    base_path: "./data"
+    datasets_path: "./data/datasets"
+    features_path: "./data/features"
+    sealed_path: "./data/sealed"
+
+evaluation:
+  walk_forward:
+    train_window_years: 3
+    test_window_months: 6
+    step_months: 6
+    min_train_bars: 500
+  bootstrap:
+    iterations: 10000              # Full iterations for publishable results
+    block_length_method: auto
+    confidence_level: 0.95
+  transaction_costs:
+    commission_bps: 5.0
+    market_impact_bps: 5.0
+    spread_bps: 5.0
+
+research:
+  protocol_version: "1.0"
+  pre_registrations_path: "./docs/research/pre-registrations"
+  research_log_path: "./docs/research/research-log"
+  expected_acceptance_rate_min: 0.05
+  expected_acceptance_rate_max: 0.20
+
+experiment_tracking:
+  backend: file
+  tracking_uri: "./data/experiments"
+  experiment_name: marketmind_research
+
+recommendation:
+  rule_set_version: "1.0"
+  min_direction_probability: 0.60
+  min_data_quality: 0.75
+  max_volatility_percentile: 80.0

@@ -1,0 +1,138 @@
+# MarketMind .gitignore
+
+# -----------------------------------------------------------------------
+# Python
+# -----------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# -----------------------------------------------------------------------
+# Virtual environments
+# -----------------------------------------------------------------------
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# -----------------------------------------------------------------------
+# Environment variables (never commit secrets)
+# -----------------------------------------------------------------------
+.env.local
+.env.*.local
+secrets.yaml
+
+# -----------------------------------------------------------------------
+# Testing and coverage
+# -----------------------------------------------------------------------
+.tox/
+.nox/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+htmlcov/
+
+# -----------------------------------------------------------------------
+# MyPy cache
+# -----------------------------------------------------------------------
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# -----------------------------------------------------------------------
+# Ruff cache
+# -----------------------------------------------------------------------
+.ruff_cache/
+
+# -----------------------------------------------------------------------
+# Data files (never commit market data or trained models to git)
+# Version-controlled via content hashes in the dataset registry.
+# -----------------------------------------------------------------------
+data/datasets/
+data/features/
+data/experiments/
+data/*.db
+data/*.db-shm
+data/*.db-wal
+logs/
+
+# Sealed final validation set IS version-controlled for auditability
+# data/sealed/ — intentionally NOT in gitignore
+
+# -----------------------------------------------------------------------
+# Machine learning artifacts
+# -----------------------------------------------------------------------
+models/registry/
+mlruns/
+*.pkl
+*.joblib
+*.h5
+*.onnx
+
+# -----------------------------------------------------------------------
+# Jupyter notebooks — outputs stripped by pre-commit hook
+# Keep .ipynb files; output cells are stripped before commit
+# -----------------------------------------------------------------------
+.ipynb_checkpoints/
+notebooks/reports/*.html
+
+# -----------------------------------------------------------------------
+# macOS
+# -----------------------------------------------------------------------
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+
+# -----------------------------------------------------------------------
+# IDE / Editor
+# -----------------------------------------------------------------------
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# -----------------------------------------------------------------------
+# Docker
+# -----------------------------------------------------------------------
+.dockerignore
+
+# -----------------------------------------------------------------------
+# OS
+# -----------------------------------------------------------------------
+Thumbs.db

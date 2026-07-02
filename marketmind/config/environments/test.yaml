@@ -1,0 +1,68 @@
+# config/environments/test.yaml
+#
+# Test environment configuration.
+# Used by pytest. Optimised for speed and isolation:
+#   - In-memory SQLite (no disk I/O)
+#   - Mock provider only (no network calls in CI)
+#   - Minimal bootstrap iterations
+#   - Predictable, deterministic settings
+
+environment: test
+
+logging:
+  level: WARNING        # Reduce noise in test output; use caplog for assertions
+  format: console
+  log_file: null
+
+database:
+  url: "sqlite:///:memory:"
+  echo_sql: false
+
+data:
+  providers:
+    primary: mock
+    fallback: mock
+  validation:
+    quality_gate_threshold: 0.70
+    outlier_sigma: 4.0
+    max_missing_ratio: 0.05
+    freshness_max_lag_days: 365    # Never stale in tests (static fixtures)
+  storage:
+    base_path: "/tmp/marketmind_test"
+    datasets_path: "/tmp/marketmind_test/datasets"
+    features_path: "/tmp/marketmind_test/features"
+    sealed_path: "/tmp/marketmind_test/sealed"
+
+evaluation:
+  walk_forward:
+    train_window_years: 2          # Smaller windows so fixture data is sufficient
+    test_window_months: 3
+    step_months: 3
+    min_train_bars: 100            # Reduced for small test fixtures
+  bootstrap:
+    iterations: 100               # Fast; results not used for significance claims
+    block_length_method: fixed
+    fixed_block_length: 5
+    confidence_level: 0.95
+  transaction_costs:
+    commission_bps: 5.0
+    market_impact_bps: 5.0
+    spread_bps: 5.0
+
+research:
+  protocol_version: "1.0"
+  pre_registrations_path: "/tmp/marketmind_test/pre-registrations"
+  research_log_path: "/tmp/marketmind_test/research-log"
+  expected_acceptance_rate_min: 0.00   # No constraint in tests
+  expected_acceptance_rate_max: 1.00
+
+experiment_tracking:
+  backend: file
+  tracking_uri: "/tmp/marketmind_test/experiments"
+  experiment_name: marketmind_test
+
+recommendation:
+  rule_set_version: "1.0"
+  min_direction_probability: 0.60
+  min_data_quality: 0.70
+  max_volatility_percentile: 80.0
