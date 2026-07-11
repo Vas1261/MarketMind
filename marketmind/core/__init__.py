@@ -30,18 +30,23 @@ from marketmind.core.domain.market_data import (
 )
 from marketmind.core.domain.regime import MarketRegime, RegimeClassification
 from marketmind.core.exceptions import (
+    AuthenticationError,
     ConfigurationError,
     DataError,
     DataIntegrityError,
     DataNotFoundError,
     DataQualityGateError,
+    DataUnavailableError,
     ExperimentStateError,
     FeatureError,
+    InvalidTickerError,
     LeakageError,
     MarketMindError,
     ModelError,
     ModelNotFittedError,
     ProviderError,
+    ProviderUnavailableError,
+    RateLimitError,
     ResearchError,
     ValidationError,
 )
@@ -52,7 +57,11 @@ __all__ = [
     # Assets
     "Asset",
     "AssetClass",
+    # Exceptions — providers
+    "AuthenticationError",
+    # Exceptions — other layers
     "ConfigurationError",
+    # Exceptions — data layer
     "DataError",
     "DataIntegrityError",
     "DataNotFoundError",
@@ -60,15 +69,17 @@ __all__ = [
     # Market Data
     "DataQualityLevel",
     "DataQualityScore",
+    "DataUnavailableError",
     "Exchange",
     "Experiment",
     "ExperimentStateError",
     "ExperimentStatus",
     "FeatureError",
+    "InvalidTickerError",
     "KillCriteria",
     "LeakageError",
     "MarketCapTier",
-    # Exceptions
+    # Exceptions — base
     "MarketMindError",
     # Regime
     "MarketRegime",
@@ -78,6 +89,8 @@ __all__ = [
     "OHLCVDataset",
     "PreRegistration",
     "ProviderError",
+    "ProviderUnavailableError",
+    "RateLimitError",
     "RegimeClassification",
     "ResearchError",
     "Universe",

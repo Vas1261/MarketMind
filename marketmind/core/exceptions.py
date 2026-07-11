@@ -43,7 +43,61 @@ class ProviderError(DataError):
 
 
 class ProviderUnavailableError(ProviderError):
-    """Raised when a market data provider is unreachable."""
+    """Raised when a market data provider is unreachable or returns a server error."""
+
+
+class AuthenticationError(ProviderError):
+    """
+    Raised when a provider rejects the request due to missing or invalid credentials.
+
+    Callers should not retry — the fix is to supply correct API credentials.
+    """
+
+
+class RateLimitError(ProviderError):
+    """
+    Raised when a provider rejects the request because the rate limit is exceeded.
+
+    Attributes
+    ----------
+    retry_after_seconds:
+        Number of seconds the caller should wait before retrying.
+        None if the provider did not supply a retry-after value.
+    """
+
+    def __init__(self, message: str, retry_after_seconds: int | None = None) -> None:
+        self.retry_after_seconds = retry_after_seconds
+        super().__init__(message)
+
+
+class DataUnavailableError(ProviderError):
+    """
+    Raised when data for the requested asset and date range is temporarily unavailable.
+
+    Distinct from DataNotFoundError: the data may exist but cannot be served right now
+    (e.g. market data feed is delayed, exchange data is embargoed).
+    """
+
+
+class InvalidTickerError(ProviderError):
+    """
+    Raised when the requested ticker symbol does not exist on the specified exchange.
+
+    Attributes
+    ----------
+    symbol:
+        The invalid symbol that was requested.
+    exchange:
+        The exchange on which the symbol was not found.
+    """
+
+    def __init__(self, symbol: str, exchange: str) -> None:
+        self.symbol = symbol
+        self.exchange = exchange
+        super().__init__(
+            f"Ticker '{symbol}' not found on exchange '{exchange}'. "
+            "Verify the symbol is correct and listed on the specified exchange."
+        )
 
 
 class DataNotFoundError(DataError):

@@ -27,7 +27,7 @@ if TYPE_CHECKING:
     from datetime import datetime
 
     from marketmind.core.domain.asset import Asset
-    from marketmind.core.domain.market_data import OHLCVDataset
+    from marketmind.core.domain.market_data import OHLCVDataset, ValidationRuleResult
 
 # ---------------------------------------------------------------------------
 # Data Layer Protocols
@@ -119,7 +119,7 @@ class ValidationRule(Protocol):
     rule_name: str
     severity: str
 
-    def validate(self, dataset: OHLCVDataset) -> ValidationRuleResult:  # type: ignore[name-defined]  # noqa: F821
+    def validate(self, dataset: OHLCVDataset) -> ValidationRuleResult:
         """
         Apply this rule to the dataset.
 
