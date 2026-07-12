@@ -9,6 +9,7 @@ Public API
     from marketmind.data.providers import (
         BaseMarketDataProvider,
         MockProvider,
+        YahooFinanceProvider,
         ProviderRegistry,
         OHLCVRequest,
         ProviderCapabilities,
@@ -29,14 +30,15 @@ No downstream component imports a concrete provider class directly.
 Phase 2.1 providers:
   mock     -> MockProvider (deterministic synthetic data, no network)
 
-Phase 2.2 providers (planned):
-  yahoo    -> YahooFinanceProvider
+Phase 2.2 providers:
+  yahoo    -> YahooFinanceProvider (Yahoo Finance via yfinance)
 """
 
 from marketmind.data.providers.base import BaseMarketDataProvider
 from marketmind.data.providers.mock import MockProvider
 from marketmind.data.providers.models import AssetMetadata, OHLCVRequest, ProviderCapabilities
 from marketmind.data.providers.registry import ProviderRegistry
+from marketmind.data.providers.yahoo import YahooFinanceProvider
 
 __all__ = [
     "AssetMetadata",
@@ -45,4 +47,5 @@ __all__ = [
     "OHLCVRequest",
     "ProviderCapabilities",
     "ProviderRegistry",
+    "YahooFinanceProvider",
 ]
